@@ -1,0 +1,78 @@
+{
+  "devDependencies": {
+    "@types/jest": "^28.1.1",
+    "jest": "^28.1.0",
+    "prettier": "^2.6.2",
+    "ts-jest": "^28.0.4",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.7.3"
+  },
+  "name": "psbeauty-client",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "ansi-styles": "^3.2.1",
+    "argparse": "^1.0.10",
+    "axios": "^0.27.2",
+    "balanced-match": "^1.0.2",
+    "brace-expansion": "^1.1.11",
+    "builtin-modules": "^1.1.1",
+    "chalk": "^2.4.2",
+    "color-convert": "^1.9.3",
+    "color-name": "^1.1.3",
+    "commander": "^2.20.3",
+    "concat-map": "^0.0.1",
+    "diff": "^4.0.2",
+    "escape-string-regexp": "^1.0.5",
+    "esprima": "^4.0.1",
+    "firebase": "^9.8.2",
+    "fs.realpath": "^1.0.0",
+    "function-bind": "^1.1.1",
+    "glob": "^7.2.3",
+    "graphql": "^16.5.0",
+    "graphql-tag": "^2.12.6",
+    "has": "^1.0.3",
+    "has-flag": "^3.0.0",
+    "inflight": "^1.0.6",
+    "inherits": "^2.0.4",
+    "is-core-module": "^2.9.0",
+    "js-tokens": "^4.0.0",
+    "js-yaml": "^3.14.1",
+    "minimatch": "^3.1.2",
+    "minimist": "^1.2.6",
+    "mkdirp": "^0.5.6",
+    "once": "^1.4.0",
+    "path-is-absolute": "^1.0.1",
+    "path-parse": "^1.0.7",
+    "resolve": "^1.22.0",
+    "semver": "^5.7.1",
+    "sprintf-js": "^1.0.3",
+    "supports-color": "^5.5.0",
+    "supports-preserve-symlinks-flag": "^1.0.0",
+    "tslib": "^1.14.1",
+    "tsutils": "^2.29.0",
+    "wrappy": "^1.0.2"
+  },
+  "scripts": {
+    "test": "jest --config jestconfig.json",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucifernet/psbeauty-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucifernet/psbeauty-test/issues"
+  },
+  "homepage": "https://github.com/lucifernet/psbeauty-test#readme",
+  "files": [
+    "lib/**/*"
+  ]
+}
