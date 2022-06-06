@@ -20,52 +20,52 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 // This browser doesn't support the API's required to use the Firebase SDK.
 // const messaging = getMessaging(app);
-//const endpoint = "https://cloud-run-api-psbeauty-deuedjpwuq-de.a.run.app/api/graphql/";
-const endpoint = "http://localhost:8080/api/graphql/";
+const endpoint = "https://cloud-run-api-psbeauty-deuedjpwuq-de.a.run.app/api/graphql/";
+//const endpoint = "http://localhost:8080/api/graphql/";
 const email = "el.lai@cloudlytics.me"
 const password = "12341234"
 
-// test('createUserWithEmailAndPassword', async () => {
-//     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-//     expect(userCredential).not.toBeUndefined();
+test('createUserWithEmailAndPassword', async () => {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    expect(userCredential).not.toBeUndefined();
 
-//     const idToken = await userCredential.user.getIdToken(true);
-//     console.log(`idToken : ${idToken}`);
-//     // Get device token for firebase cloud messaging.
-//     //const client_device_token = getToken(messaging);
-//     const client_device_token = "firebase_client_device_token";
-//     expect(client_device_token).not.toBeUndefined();
+    const idToken = await userCredential.user.getIdToken(true);
+    console.log(`idToken : ${idToken}`);
+    // Get device token for firebase cloud messaging.
+    //const client_device_token = getToken(messaging);
+    const client_device_token = "firebase_client_device_token";
+    expect(client_device_token).not.toBeUndefined();
 
-//     // Add user to psbeauty database
-//     const ADD_USER = gql`
-//     mutation addUser($phone: String, $clientToken: [String], $name: String!) {
-//         addUser (input: {                
-//             phone: $phone
-//             clientToken: $clientToken
-//             name: $name
-//         }) {
-//             id
-//         }
-//     }`
+    // Add user to psbeauty database
+    const ADD_USER = gql`
+    mutation addUser($phone: String, $clientToken: [String], $name: String!) {
+        addUser (input: {                
+            phone: $phone
+            clientToken: $clientToken
+            name: $name
+        }) {
+            id
+        }
+    }`
 
-//     const result = await axios.post(endpoint, {
-//         query: print(ADD_USER),
-//         variables: {
-//             phone: "0909090909",
-//             name: "Wang",
-//             clientToken: [client_device_token],
-//         },
-//     }, {
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'Authorization': `Bearer ${idToken}`
-//         }
-//     })
-//     console.log(result.data);
-//     expect(result.data.data.addUser.id).not.toBeUndefined();
-// });
+    const result = await axios.post(endpoint, {
+        query: print(ADD_USER),
+        variables: {
+            phone: "0909090909",
+            name: "Wang",
+            clientToken: [client_device_token],
+        },
+    }, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${idToken}`
+        }
+    })
+    console.log(result.data);
+    expect(result.data.data.addUser.id).not.toBeUndefined();
+});
 
-test('signIn', async () => {
+test('signInWithEmailAndPassword', async () => {
     const userCred = await signInWithEmailAndPassword(auth, email, password);
     const idToken = await getIdToken(userCred.user, false);
     console.log(`idToken: ${idToken}`);
