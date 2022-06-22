@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, getIdToken, UserCredential } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, getIdToken, UserCredential, sendEmailVerification } from "firebase/auth";
 import { getMessaging, getToken, Messaging } from "firebase/messaging";
 import { getStorage, ref, uploadBytes, uploadString } from "firebase/storage";
 import { print } from 'graphql';
@@ -22,10 +22,10 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 // This browser doesn't support the API's required to use the Firebase SDK.
 // const messaging = getMessaging(app);
-const endpoint = "https://cloud-run-api-psbeauty-deuedjpwuq-de.a.run.app/api/graphql/";
-// const endpoint = "http://localhost:8080/api/graphql/";
-const email = "el.lai@cloudlytics.me"
-const password = "12341234"
+ const endpoint = "https://cloud-run-api-psbeauty-deuedjpwuq-de.a.run.app/api/graphql/";
+//const endpoint = "http://localhost:8080/api/graphql/";
+const email = "el.lai@cloudlytics.me";
+const password = "12341234";
 
 test('createUserWithEmailAndPassword', async () => {
     // 設定過程不得超過一分鐘
@@ -44,6 +44,11 @@ test('createUserWithEmailAndPassword', async () => {
             email: email
         },
     });
+
+    if(existResult.data.data.emailExists.exists) {
+        // 進行帳號已存在處理
+    }
+
     expect(existResult.data.data.emailExists.exists).toBeFalsy();
 
     let userCredential: UserCredential;
@@ -54,6 +59,10 @@ test('createUserWithEmailAndPassword', async () => {
         expect(signUpError).toBeUndefined();
         return;
     }
+
+    // 寄發認證信
+    await sendEmailVerification(userCredential.user);
+
     // 使用者憑證必須有
     expect(userCredential).not.toBeUndefined();
 
@@ -108,15 +117,25 @@ test('signInWithEmailAndPassword', async () => {
             customToken uid
         }
     }
-    `
-    const result = await axios.post(endpoint, {
-        query: print(CUSTOM_TOKEN),
-    }, {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${idToken}`
-        }
-    })    
-    console.log(result.data);
-    expect(result.data.data.customToken.customToken).not.toBeUndefined();
+    `;
+
+    let data: any;
+    try {
+        const result = await axios.post(endpoint, {
+            query: print(CUSTOM_TOKEN),
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${idToken}`
+            }
+        });
+        data = result.data;
+    } catch (err) {
+        console.log(err);
+        expect(err).toBeUndefined();
+    }
+
+    expect(data.errors).toBeUndefined();
+    console.log(data);
+    expect(data.data.customToken.customToken).not.toBeUndefined();
 });
